@@ -1,9 +1,9 @@
 #pragma once
-
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "CliApp.hpp"
 
 struct Item
 {
@@ -12,7 +12,7 @@ struct Item
 	std::string description;
 };
 
-class Todo {
+class Todo: public CliApp {
 public:
 	std::ofstream db;
 	Todo() = default;
@@ -20,6 +20,7 @@ public:
 	void remove(unsigned int id);
 	Item get(unsigned int id) const;
 	std::vector<Item> list() const;
+	void run_app();
 private:
 	void fwrite(const Item& item);
 	std::vector<Item> fread() const;

@@ -2,6 +2,74 @@
 #include <random>
 
 
+void Todo::run_app() {
+    unsigned int input;
+    Todo todo;
+    Item item;
+
+    while (true) {
+        std::cout << "Todo Application\n";
+        std::cout << "1. Add Todo\n";
+        std::cout << "2. Remove Todo\n";
+        std::cout << "3. Get Todo\n";
+        std::cout << "4. List Todos\n";
+        std::cout << "Choose: ";
+
+        if (!(std::cin >> input)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        system("cls");
+
+        switch (input)
+        {
+        case 1:
+            std::cout << "Enter Title: ";
+            getline(std::cin, item.title);
+
+            std::cout << "Enter Description: ";
+            getline(std::cin, item.description);
+
+            todo.add(item.title, item.description);
+            break;
+
+        case 2: {
+            unsigned int id;
+            std::cout << "Enter the id to remove: ";
+            std::cin >> id;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            todo.remove(id);
+            break;
+        }
+
+        case 3: {
+            unsigned int id;
+            std::cout << "Enter id of Todo: ";
+            std::cin >> id;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            Item found = todo.get(id);
+            std::cout << found.title << " - " << found.description << "\n";
+            break;
+        }
+
+        case 4:
+            for (const auto& i : todo.list()) {
+                std::cout << "ID: " << i.id << "\n";
+                std::cout << "Title: " << i.title << "\n";
+                std::cout << "Description: " << i.description << "\n";
+                std::cout << "-----------------------\n";
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
 // add item to todo list
 void Todo::add(std::string& title, std::string& description) {
 	Item item;

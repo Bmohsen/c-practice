@@ -12,7 +12,11 @@ endif()
 project ("todo")
 
 # Add source to this project's executable.
-add_executable (todo "app.cpp" "todo.h" "Todo.cpp")
+add_executable (todo "app.cpp" "./src/todo/Todo.cpp" "src/password-manager/pmanager.cpp")
+target_include_directories(todo
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET todo PROPERTY CXX_STANDARD 20)
