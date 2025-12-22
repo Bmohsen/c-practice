@@ -1,4 +1,4 @@
-#include "Todo.hpp"
+﻿#include "Todo.hpp"
 #include <random>
 
 
@@ -15,16 +15,21 @@ void Todo::run_app() {
         std::cout << "4. List Todos\n";
         std::cout << "Choose: ";
 
-        if (!(std::cin >> input)) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        // ESC
+        int ch = _getch();
+        if (ch == 27) { 
+            system("cls");
+            return; 
+        }
+
+        if (ch < '1' || ch > '4') {
+            system("cls");
             continue;
         }
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         system("cls");
 
-        switch (input)
+        switch (ch - '0') 
         {
         case 1:
             std::cout << "Enter Title: ";
