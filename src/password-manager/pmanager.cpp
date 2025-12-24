@@ -1,5 +1,7 @@
 ﻿#include "pmanager.hpp"
-
+#include <fstream>
+#include <iostream>
+#include <conio.h>
 
 void PasswordManager::run_app() {
 	PService service;
@@ -81,7 +83,7 @@ PService PasswordManager::get_password(const std::string& service_name) {
 }
 
 // add a password to a vault
-void PasswordManager::add_password(std::string& service_name, std::string& username, std::string& password) {
+void PasswordManager::add_password(const std::string& service_name, const std::string& username, const std::string& password) {
 	PService service;
 	service.service = service_name;
 	service.username = username;

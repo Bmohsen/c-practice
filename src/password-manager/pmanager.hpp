@@ -2,9 +2,7 @@
 #include "CliApp.hpp"
 #include <vector>
 #include <string>
-#include <fstream>
-#include <iostream>;
-#include <conio.h>
+
 
 struct PService
 {
@@ -21,7 +19,7 @@ private:
 	std::vector<PService> services;
 	const std::string file_name = "passwords.db";
 	const char encryption_key = 0x4C;
-	void add_password(std::string& service_name, std::string& username, std::string& password);
+	void add_password(const std::string& service_name, const std::string& username, const std::string& password);
 	void remove_service(const std::string& service_name);
 	PService get_password(const std::string& service_name);
 	std::string encrypt_password(std::string& password);
