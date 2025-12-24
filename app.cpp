@@ -1,6 +1,7 @@
 ﻿#include "todo/Todo.hpp"
 #include "password-manager/pmanager.hpp"
 #include <limits>
+#include "process-list/ProcessList.hpp"
 
 using namespace std;
 
@@ -10,7 +11,8 @@ int main()
     while(true) {
         cout << "1. Todo Application\n";
         cout << "2. Passwrod Manager Application\n";
-        cout << "3. Press ESC to quit app. \n";
+        cout << "3. Simple Task Manager.\n";
+        cout << "4. Press ESC to quit app. \n";
         cout << "Choose: ";
 
         int ch = _getch();
@@ -35,6 +37,11 @@ int main()
         case 2: {
             PasswordManager pmanager;
             pmanager.run_app();
+            break;
+        }
+        case 3: {
+            TaskManager tm;
+            tm.run_app();
             break;
         }
         default:

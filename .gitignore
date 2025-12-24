@@ -40,3 +40,5 @@ out
 
 # debug information files
 *.dwo
+
+vcpkg_installed

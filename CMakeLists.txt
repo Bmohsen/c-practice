@@ -1,25 +1,36 @@
-﻿# CMakeList.txt : CMake project for todo, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.10)
+﻿cmake_minimum_required(VERSION 3.24)
+project(SCli VERSION 1.0 LANGUAGES CXX)
 
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
+# Use C++20
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-project ("todo")
+# Ensure the vcpkg toolchain is used (via CMakePresets or -DCMAKE_TOOLCHAIN_FILE)
+# and manifest mode is enabled. 
 
-# Add source to this project's executable.
-add_executable (todo "app.cpp" "./src/todo/Todo.cpp" "src/password-manager/pmanager.cpp")
-target_include_directories(todo
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+
+# Find and link vcpkg packages
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(ftxui       CONFIG REQUIRED)
+find_package(unofficial-uwebsockets CONFIG REQUIRED)
+
+# Define the executable with all source files
+add_executable(${PROJECT_NAME}
+    app.cpp
+    src/todo/Todo.cpp
+    src/password-manager/pmanager.cpp
+ "src/process-list/ProcessList.cpp")
+
+# Include headers from src/
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
+
+# Link vcpkg-provided library targets
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    nlohmann_json::nlohmann_json     # JSON for Modern C++:contentReference[oaicite:3]{index=3}
+    ftxui::screen                    # FTXUI screen component:contentReference[oaicite:4]{index=4}
+    ftxui::dom                       # FTXUI DOM component:contentReference[oaicite:5]{index=5}
+    ftxui::component                 # FTXUI component library:contentReference[oaicite:6]{index=6}
+    unofficial::uwebsockets::uwebsockets
 )
-
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET todo PROPERTY CXX_STANDARD 20)
-endif()
-
-# TODO: Add tests and install targets if needed.
